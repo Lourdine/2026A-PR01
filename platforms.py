@@ -57,6 +57,20 @@ def create_platform(x, y, platform_type="green"):
     # - une plateforme à ressort est 10 pixels plus haute ;
     # - les autres plateformes sont immobiles et gardent la hauteur normale.
 
+    if platform_type=="blue":
+         platform["type"]="blue"
+         platform["image"]=platform_images["blue"]
+         platform["vx"]=MOVING_PLATFORM_SPEED
+    if platform_type=="spring":
+        platform["type"]="spring"
+        platform["image"]=platform_images["spring"]
+        platform["height"]=PLATFORM_SIZE[1] +10
+    if platform_type=="brown":
+        platform["type"]="brown"
+        platform["image"]=platform_images["brown"]
+    
+
+
     return platform
 
 # ===========================================================
@@ -78,8 +92,18 @@ def choose_platform_type(green_probability, blue_probability, spring_probability
     #
     # Attention : les seuils utilisés avec random.random() doivent être
     # cumulatifs.
+    r=random.random()
+    if r < green_probability:
+        return "green"
+    elif r < green_probability+blue_probability:
+        return "blue"
+    elif r < green_probability+blue_probability+spring_probability:
+        return "spring"
+    else:
+        return "brown"
 
-    return "green"  # Valeur temporaire à remplacer
+
+
 
 # ===========================================================
 
